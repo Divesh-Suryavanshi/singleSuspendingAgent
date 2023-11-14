@@ -364,6 +364,23 @@ function pourMortar() {
         const beakerCords = beaker.getBoundingClientRect();
         const cylinderCords = cylinder.getBoundingClientRect();
 
+        // move cylinder back to its position after being filled
+        cylinder.addEventListener(
+          "click",
+          () => {
+            cylinder.animate(
+              [
+                {},
+                {
+                  transform: `translate(0,0)`,
+                },
+              ],
+              { duration: 1000, fill: "forwards" }
+            );
+          },
+          { once: true }
+        );
+
         beaker.addEventListener("click", pourBeaker, { once: true });
         function pourBeaker() {
           console.log(cylinderCords.left - beakerCords.right);
