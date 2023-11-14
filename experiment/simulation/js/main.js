@@ -8,7 +8,19 @@ const btnShake = document.querySelector(".shake");
 
 const sediments = document.querySelector(`.sediment-agent`);
 
-sediments.addEventListener("click", ({ target: sedimentAgent }) => {
+sediments.addEventListener("click", moveSediments);
+
+// array to keep track of sediments which have been used up
+let sedimentsUsed = [];
+
+function moveSediments({ target: sedimentAgent }) {
+  // stop execution of the function if sediment is already used
+  if (sedimentsUsed.includes(sedimentAgent)) {
+    return;
+  }
+
+  sedimentsUsed.push(sedimentAgent);
+
   const sedimentCords = sedimentAgent.getBoundingClientRect();
   // console.log(sedimentCords);
   const mortarCords = mortar.getBoundingClientRect();
@@ -31,7 +43,7 @@ sediments.addEventListener("click", ({ target: sedimentAgent }) => {
       // iterations: Infinity,
     }
   );
-});
+}
 
 // sediment.addEventListener("click", () => {
 //   const sedimentCords = sediment.getBoundingClientRect();
@@ -383,7 +395,7 @@ function pourMortar() {
 
         beaker.addEventListener("click", pourBeaker, { once: true });
         function pourBeaker() {
-          console.log(cylinderCords.left - beakerCords.right);
+          // console.log(cylinderCords.left - beakerCords.right);
           beaker.animate(
             [
               {},
