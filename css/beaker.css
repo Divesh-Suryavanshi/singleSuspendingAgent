@@ -1,0 +1,55 @@
+.beaker {
+  position: relative;
+  height: 100px;
+  width: 75px;
+  /* border: 2px solid black; */
+  background-color: rgba(189, 195, 199, 0.6);
+  border-top-left-radius: 100px 30px;
+  border-top-right-radius: 100px 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+
+.beaker::before {
+  content: "";
+  width: 100%;
+  height: 20px;
+  position: absolute;
+  border-bottom-left-radius: 100px 30px;
+  border-bottom-right-radius: 100px 30px;
+  /* z-index: -1; */
+  background-color: rgba(71, 72, 72, 0.4);
+}
+
+.beaker > .sediment {
+  /* background-image: url("../images/sediment-soil.jpg"); */
+  /* background-size: contain; */
+  /* background-origin: border-box; */
+  height: 100%;
+  width: 100%;
+  background-color: pink;
+  position: relative;
+  z-index: -1;
+  bottom: -100px;
+  opacity: 60%;
+}
+
+.water > .sediment {
+  /* background-image: url("../images/sediment-soil.jpg"); */
+  /* background-size: contain; */
+  /* background-origin: border-box; */
+  background-color: blue;
+  bottom: -30px;
+  /* opacity: 100%; */
+}
+
+/* @keyframes fillBeaker {
+  0% {
+    bottom: -100px;
+  }
+
+  100% {
+    bottom: -80px;
+  }
+} */

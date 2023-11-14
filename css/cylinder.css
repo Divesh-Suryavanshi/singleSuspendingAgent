@@ -1,0 +1,59 @@
+.cylinder {
+  position: relative;
+  height: 300px;
+  width: 35px;
+  /* border: 2px solid black; */
+  background-color: rgba(189, 195, 199, 0.6);
+  border-top-left-radius: 100px 30px;
+  border-top-right-radius: 100px 30px;
+  /* border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px; */
+  overflow: hidden;
+}
+
+.cylinder::before {
+  content: "";
+  width: 100%;
+  height: 10px;
+  position: absolute;
+  border-bottom-left-radius: 100px 30px;
+  border-bottom-right-radius: 100px 30px;
+  /* z-index: -1; */
+  background-color: rgba(71, 72, 72, 0.4);
+}
+
+.cylinder-stand {
+  content: "";
+  width: 45px;
+  height: 10px;
+  background-color: rgba(189, 195, 199, 0.6);
+
+  /* background-color: black; */
+  transform: perspective(10px) rotateX(20deg) translateY(-2px);
+  /* border-top: 40px solidd red; */
+  /* position: absolute; */
+  /* bottom: 0; */
+}
+
+.cylinder > .sediment {
+  /* background-image: url("../images/sediment-soil.jpg"); */
+  /* background-size: contain; */
+  /* background-origin: border-box; */
+  height: 100%;
+  width: 100%;
+  background-color: pink;
+  position: relative;
+  z-index: -1;
+  bottom: -300px;
+  opacity: 60%;
+}
+
+@keyframes fillCylinder {
+  0% {
+    bottom: -300px;
+  }
+
+  100% {
+    bottom: -100px;
+  }
+}

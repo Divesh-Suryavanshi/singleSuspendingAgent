@@ -1,0 +1,103 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-image: url(../images/bg.png);
+  background-size: cover;
+  /* overflow: hidden; */
+}
+
+.experiment-area {
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: grid;
+  grid-template-areas:
+    " 1 sediment cylinder cylinder "
+    " beakers mortar mortar water ";
+  align-items: end;
+  /* justify-content: center; */
+}
+
+.experiment-area > * {
+  flex-grow: 1;
+}
+
+.sediment-agent {
+  grid-area: sediment;
+  transform: translate(0, 130px);
+}
+
+.sediment-agent > .row2 {
+  transform: translate(40px, -25px);
+}
+
+.sediment-agent > .row > img {
+  width: 100px;
+}
+
+.measuring-cylinder {
+  grid-area: cylinder;
+  justify-self: end;
+  display: flex;
+  gap: 50px;
+  /* justify-content: space-between; */
+  /* width: 90%; */
+}
+
+.measuring-cylinder > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .measuring-cylinder > div {
+  height: px;
+} */
+
+.beakers {
+  grid-area: beakers;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 10px;
+}
+
+/* .beakers > img {
+  height: 120px;
+} */
+
+/* .beakers > span {
+  content: "";
+  background-color: pink;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+} */
+
+.mortar-pestle {
+  grid-area: mortar;
+  justify-self: center;
+}
+
+.mortar-pestle > img {
+  width: 100px;
+}
+
+.water {
+  grid-area: water;
+}
+
+.water > img {
+  height: 150px;
+}
+
+.shake {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}
