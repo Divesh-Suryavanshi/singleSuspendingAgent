@@ -8,16 +8,14 @@ const cylinder = document.querySelector(
 
 const btnShake = document.querySelector(".shake");
 
-const sediment = document.querySelector(
-  `.sediment-agent > .row1 > img:first-child`
-);
+const sediments = document.querySelector(`.sediment-agent`);
 
-sediment.addEventListener("click", () => {
-  const sedimentCords = sediment.getBoundingClientRect();
+sediments.addEventListener("click", ({ target: sedimentAgent }) => {
+  const sedimentCords = sedimentAgent.getBoundingClientRect();
   // console.log(sedimentCords);
   const mortarCords = mortar.getBoundingClientRect();
 
-  sediment.animate(
+  sedimentAgent.animate(
     [
       {},
       {
@@ -36,6 +34,31 @@ sediment.addEventListener("click", () => {
     }
   );
 });
+
+// sediment.addEventListener("click", () => {
+//   const sedimentCords = sediment.getBoundingClientRect();
+//   // console.log(sedimentCords);
+//   const mortarCords = mortar.getBoundingClientRect();
+
+//   sediment.animate(
+//     [
+//       {},
+//       {
+//         transform: `translate(${
+//           mortarCords.right + 25 - sedimentCords.right
+//         }px,${mortarCords.top + 5 - sedimentCords.top}px)`,
+
+//         width: "50px",
+//         opacity: "70%",
+//       },
+//     ],
+//     {
+//       duration: 1000,
+//       fill: "forwards",
+//       // iterations: Infinity,
+//     }
+//   );
+// });
 
 pestle.addEventListener("click", movePestle, {
   once: true,

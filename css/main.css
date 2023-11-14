@@ -30,15 +30,21 @@ body {
 
 .sediment-agent {
   grid-area: sediment;
-  transform: translate(0, 130px);
+  transform: translate(0, 120px);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-.sediment-agent > .row2 {
+/* .sediment-agent > .row2 {
   transform: translate(40px, -25px);
+} */
+
+.sediment-agent > img {
+  width: 100px;
 }
 
-.sediment-agent > .row > img {
-  width: 100px;
+.sediment-agent > img:nth-child(5) {
+  grid-column: 2;
 }
 
 .measuring-cylinder {
