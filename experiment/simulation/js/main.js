@@ -2,9 +2,7 @@ const mortar = document.querySelector(".mortar");
 const pestle = document.querySelector(".pestle");
 const water = document.querySelector(".water");
 const beaker = document.querySelector(".beakers > div:first-child");
-const cylinder = document.querySelector(
-  ".measuring-cylinder > span:first-child"
-);
+const cylinders = document.querySelector(".measuring-cylinder");
 
 const btnShake = document.querySelector(".shake");
 
@@ -288,7 +286,7 @@ function pourMortar() {
   const mortarCords = mortar.getBoundingClientRect();
   const beakerCords = beaker.getBoundingClientRect();
 
-  sediment.style.display = "none";
+  sediments.style.display = "none";
 
   pestle.animate(
     [
@@ -344,13 +342,18 @@ function pourMortar() {
     }
   ).onfinish = () => {
     pestle.addEventListener("click", movePestle);
-    cylinder.addEventListener("click", moveCylinder, { once: true });
-    function moveCylinder() {
+    cylinders.addEventListener("click", moveCylinder, { once: true });
+    function moveCylinder({ target: cylinder }) {
+      cylinder = cylinder.closest("span");
       cylinder.animate(
         [
           {},
           {
-            transform: "translate(-200px,50px)",
+            transform: `translate(${
+              cylinders.getBoundingClientRect().left -
+              cylinder.getBoundingClientRect().left -
+              200
+            }px,50px)`,
           },
         ],
         {
