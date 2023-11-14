@@ -298,7 +298,7 @@ function pourMortar() {
   const mortarCords = mortar.getBoundingClientRect();
   const beakerCords = beaker.getBoundingClientRect();
 
-  sediments.style.display = "none";
+  sediments.style.visibility = "hidden";
 
   pestle.animate(
     [
