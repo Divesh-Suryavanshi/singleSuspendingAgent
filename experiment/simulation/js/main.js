@@ -395,7 +395,18 @@ function pourMortar() {
 
         beaker.addEventListener("click", pourBeaker, { once: true });
         function pourBeaker() {
-          // console.log(cylinderCords.left - beakerCords.right);
+          // move water beaker to its initial position of rest
+          water.animate(
+            [
+              {},
+              {
+                transform: "translate(0,0)",
+              },
+            ],
+            { duration: 1000, fill: "forwards" }
+          );
+
+          // move the beaker closer to cylinder and pour into it
           beaker.animate(
             [
               {},
