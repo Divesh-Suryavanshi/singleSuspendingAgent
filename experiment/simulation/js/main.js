@@ -5,10 +5,25 @@ const beakers = document.querySelector(".beakers");
 const cylinders = document.querySelector(".measuring-cylinder");
 
 const btnShake = document.querySelector(".shake");
+const btnReset = document.querySelector(".reset");
 
 const sediments = document.querySelector(`.sediment-agent`);
 
-sediments.addEventListener("click", moveSediments);
+function startAndResetAnimation() {
+  sediments.style.visibility = "visible";
+  sediments.addEventListener("click", moveSediments);
+  pestle.addEventListener("click", movePestle, {
+    once: true,
+  });
+  water.addEventListener("click", pourWater, { once: true });
+  beakers.addEventListener("click", moveBeaker, { once: true });
+}
+
+btnReset.addEventListener("click", startAndResetAnimation);
+
+startAndResetAnimation();
+
+// sediments.addEventListener("click", moveSediments);
 
 // array to keep track of sediments which have been used up
 let sedimentsUsed = [];
@@ -45,34 +60,9 @@ function moveSediments({ target: sedimentAgent }) {
   );
 }
 
-// sediment.addEventListener("click", () => {
-//   const sedimentCords = sediment.getBoundingClientRect();
-//   // console.log(sedimentCords);
-//   const mortarCords = mortar.getBoundingClientRect();
-
-//   sediment.animate(
-//     [
-//       {},
-//       {
-//         transform: `translate(${
-//           mortarCords.right + 25 - sedimentCords.right
-//         }px,${mortarCords.top + 5 - sedimentCords.top}px)`,
-
-//         width: "50px",
-//         opacity: "70%",
-//       },
-//     ],
-//     {
-//       duration: 1000,
-//       fill: "forwards",
-//       // iterations: Infinity,
-//     }
-//   );
+// pestle.addEventListener("click", movePestle, {
+//   once: true,
 // });
-
-pestle.addEventListener("click", movePestle, {
-  once: true,
-});
 
 function movePestle() {
   const pestleCords = pestle.getBoundingClientRect();
@@ -139,76 +129,7 @@ function movePestle() {
   };
 }
 
-// shake pestle function
-// btnShake.addEventListener("click", pestleshake);
-
-// function shake() {
-//   const vessel = document.querySelector(".pestle");
-
-//   vessel.style.animation = "none";
-//   //   var liquid = document.getElementById("liquid");
-//   var duration = 1000; // Duration of the shake animation in milliseconds
-//   var start = null;
-
-//   function step(timestamp) {
-//     if (!start) start = timestamp;
-//     var progress = timestamp - start;
-
-//     // Calculate the horizontal position of the vessel based on the progress
-//     var x = Math.sin(progress / 20) * 10;
-
-//     // vessel.style.transform = "translateX(" + x + "px)";
-//     vessel.style.transform =
-//       "translateX(" + x + "px) rotate(" + x + "deg) !important";
-
-//     if (progress < duration) {
-//       // Continue the animation until the duration is reached
-//       window.requestAnimationFrame(step);
-//     } else {
-//       // Animation completed, reset the vessel position
-//       // vessel.style.transform = "translateX(0)";
-
-//       vessel.style.transform = "translateX(0) rotate(0) !important";
-//     }
-//   }
-//   // Start the animation
-//   window.requestAnimationFrame(step);
-// }
-
-// function pestleshake() {
-//   const pestle = document.querySelector(".pestle");
-
-//   pestle.style.animation = "none";
-//   //   var liquid = document.getElementById("liquid");
-//   var duration = 1000; // Duration of the shake animation in milliseconds
-//   var start = null;
-
-//   function step(timestamp) {
-//     if (!start) start = timestamp;
-//     var progress = timestamp - start;
-
-//     // Calculate the horizontal position of the pestle based on the progress
-//     var x = Math.sin(progress / 20) * 10;
-
-//     // pestle.style.transform = "translateX(" + x + "px)";
-//     pestle.style.transform =
-//       "translateX(" + x + "px) rotate(" + x + "deg) !important";
-
-//     if (progress < duration) {
-//       // Continue the animation until the duration is reached
-//       window.requestAnimationFrame(step);
-//     } else {
-//       // Animation completed, reset the pestle position
-//       // pestle.style.transform = "translateX(0)";
-
-//       pestle.style.transform = "translateX(0) rotate(0) !important";
-//     }
-//   }
-//   // Start the animation
-//   window.requestAnimationFrame(step);
-// }
-
-water.addEventListener("click", pourWater, { once: true });
+// water.addEventListener("click", pourWater, { once: true });
 
 function pourWater() {
   const mortarCords = mortar.getBoundingClientRect();
@@ -267,7 +188,7 @@ function pourWater() {
   };
 }
 
-beakers.addEventListener("click", moveBeaker, { once: true });
+// beakers.addEventListener("click", moveBeaker, { once: true });
 
 function moveBeaker({ target: beaker }) {
   const beakerCords = beaker.getBoundingClientRect();
@@ -490,11 +411,3 @@ function moveBeaker({ target: beaker }) {
   };
   // pourMortar after empty beaker comes near to mortar along with pestle moving aside and after pouring return mortar back to its initial position
 }
-
-// function startAnimation() {
-//   sediments.addEventListener("click", moveSediments);
-//   pestle.addEventListener("click", movePestle, {
-//     once: true,
-//   });
-//   water.addEventListener("click", pourWater, { once: true });
-// }
