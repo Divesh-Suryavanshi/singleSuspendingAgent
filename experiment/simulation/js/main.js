@@ -1,7 +1,7 @@
 const mortar = document.querySelector(".mortar");
 const pestle = document.querySelector(".pestle");
 const water = document.querySelector(".water");
-const beaker = document.querySelector(".beakers > div:first-child");
+const beakers = document.querySelector(".beakers");
 const cylinders = document.querySelector(".measuring-cylinder");
 
 const btnShake = document.querySelector(".shake");
@@ -267,9 +267,9 @@ function pourWater() {
   };
 }
 
-beaker.addEventListener("click", moveBeaker, { once: true });
+beakers.addEventListener("click", moveBeaker, { once: true });
 
-function moveBeaker() {
+function moveBeaker({ target: beaker }) {
   const beakerCords = beaker.getBoundingClientRect();
   const mortarCords = mortar.getBoundingClientRect();
 
@@ -286,201 +286,215 @@ function moveBeaker() {
       duration: 1000,
       fill: "forwards",
     }
-  );
-  // pourMortar after empty beaker comes near to mortar along with pestle moving aside and after pouring return mortar back to its initial position
-}
-
-let beakerLevel = -100;
-mortar.addEventListener("click", pourMortar);
-
-function pourMortar() {
-  beakerLevel += 20;
-  const mortarCords = mortar.getBoundingClientRect();
-  const beakerCords = beaker.getBoundingClientRect();
-
-  sediments.style.visibility = "hidden";
-
-  pestle.animate(
-    [
-      {},
-      {
-        transform: `translate(0,0)`,
-      },
-    ],
-    {
-      duration: 1000,
-      fill: "forwards",
-    }
   ).onfinish = () => {
-    const sediment = document.querySelector(".beaker > .sediment");
-    // sediment.style.animation = "fillBeaker 2s forwards";
-    sediment.animate(
-      [
-        {},
-        {
-          bottom: `${beakerLevel}px`,
-        },
-      ],
-      {
-        duration: 2000,
-        fill: "forwards",
-      }
-    );
-    // sediment.style.animation = "fillBeaker 2s";
-  };
-  mortar.animate(
-    [
-      {},
-      {
-        transform: `translate(0, ${beakerCords.top - mortarCords.bottom}px)`,
-      },
-      {
-        transform: `translate(${beakerCords.right - mortarCords.left}px, ${
-          beakerCords.top - mortarCords.bottom
-        }px)`,
-      },
-      {
-        transform: `translate(${beakerCords.right - mortarCords.left - 20}px, ${
-          beakerCords.top - mortarCords.bottom
-        }px) rotate(-45deg)`,
-      },
-    ],
-    {
-      duration: 2000,
-      // fill: "forwards",
-      easing: "ease-in-out",
-      iterations: 2,
-      direction: "alternate",
-    }
-  ).onfinish = () => {
-    pestle.addEventListener("click", movePestle);
-    cylinders.addEventListener("click", moveCylinder, { once: true });
-    function moveCylinder({ target: cylinder }) {
-      cylinder = cylinder.closest("span");
-      cylinder.animate(
+    let beakerLevel = -100;
+    mortar.addEventListener("click", pourMortar);
+
+    function pourMortar() {
+      beakerLevel += 20;
+      const mortarCords = mortar.getBoundingClientRect();
+      const beakerCords = beaker.getBoundingClientRect();
+
+      sediments.style.visibility = "hidden";
+
+      pestle.animate(
         [
           {},
           {
-            transform: `translate(${
-              cylinders.getBoundingClientRect().left -
-              cylinder.getBoundingClientRect().left -
-              200
-            }px,50px)`,
+            transform: `translate(0,0)`,
           },
         ],
         {
           duration: 1000,
           fill: "forwards",
         }
-      ).onfinish = function () {
-        const beakerCords = beaker.getBoundingClientRect();
-        const cylinderCords = cylinder.getBoundingClientRect();
-
-        // move cylinder back to its position after being filled
-        cylinder.addEventListener(
-          "click",
-          () => {
-            cylinder.animate(
-              [
-                {},
-                {
-                  transform: `translate(0,0)`,
-                },
-              ],
-              { duration: 1000, fill: "forwards" }
-            );
-          },
-          { once: true }
+      ).onfinish = () => {
+        const sediment = beaker.querySelector(".sediment");
+        // sediment.style.animation = "fillBeaker 2s forwards";
+        sediment.animate(
+          [
+            {},
+            {
+              bottom: `${beakerLevel}px`,
+            },
+          ],
+          {
+            duration: 2000,
+            fill: "forwards",
+          }
         );
-
-        beaker.addEventListener("click", pourBeaker, { once: true });
-        function pourBeaker() {
-          // move water beaker to its initial position of rest
-          water.animate(
+        // sediment.style.animation = "fillBeaker 2s";
+      };
+      mortar.animate(
+        [
+          {},
+          {
+            transform: `translate(0, ${
+              beakerCords.top - mortarCords.bottom
+            }px)`,
+          },
+          {
+            transform: `translate(${beakerCords.right - mortarCords.left}px, ${
+              beakerCords.top - mortarCords.bottom
+            }px)`,
+          },
+          {
+            transform: `translate(${
+              beakerCords.right - mortarCords.left - 20
+            }px, ${beakerCords.top - mortarCords.bottom}px) rotate(-45deg)`,
+          },
+        ],
+        {
+          duration: 2000,
+          // fill: "forwards",
+          easing: "ease-in-out",
+          iterations: 2,
+          direction: "alternate",
+        }
+      ).onfinish = () => {
+        pestle.addEventListener("click", movePestle);
+        cylinders.addEventListener("click", moveCylinder, { once: true });
+        function moveCylinder({ target: cylinder }) {
+          cylinder = cylinder.closest("span");
+          cylinder.animate(
             [
               {},
               {
-                transform: "translate(0,0)",
-              },
-            ],
-            { duration: 1000, fill: "forwards" }
-          );
-
-          // move the beaker closer to cylinder and pour into it
-          beaker.animate(
-            [
-              {},
-              // { transform: `translate(0,0)` },
-              {
                 transform: `translate(${
-                  cylinderCords.left - beakerCords.right
-                }px,${cylinderCords.top - beakerCords.bottom}px)`,
-                composite: "accumulate",
-              },
-              {
-                transform: `translate(${
-                  cylinderCords.left - beakerCords.right
-                }px,${cylinderCords.top - beakerCords.bottom}px) rotate(45deg)`,
-                composite: "accumulate",
-              },
-              {
-                transform: `translate(${
-                  cylinderCords.left - beakerCords.right
-                }px,${cylinderCords.top - beakerCords.bottom}px) rotate(45deg)`,
-                composite: "accumulate",
-              },
-              {
-                transform: `translate(0,0)`,
-              },
-            ],
-            {
-              duration: 4000,
-              fill: "forwards",
-              // composite: "accumulate",
-            }
-          );
-
-          beaker.firstChild.animate(
-            [
-              {},
-              {
-                bottom: "-100px",
+                  cylinders.getBoundingClientRect().left -
+                  cylinder.getBoundingClientRect().left -
+                  200
+                }px,50px)`,
               },
             ],
             {
               duration: 1000,
               fill: "forwards",
-              delay: 1000,
             }
-          );
-          cylinder.querySelector(".sediment").animate(
-            [
-              {},
-              {
-                bottom: "-100px",
+          ).onfinish = function () {
+            const beakerCords = beaker.getBoundingClientRect();
+            const cylinderCords = cylinder.getBoundingClientRect();
+
+            // move cylinder back to its position after being filled
+            cylinder.addEventListener(
+              "click",
+              () => {
+                cylinder.animate(
+                  [
+                    {},
+                    {
+                      transform: `translate(0,0)`,
+                    },
+                  ],
+                  { duration: 1000, fill: "forwards" }
+                );
               },
-            ],
-            {
-              duration: 1000,
-              fill: "forwards",
-              delay: 1500,
+              { once: true }
+            );
+
+            beaker.addEventListener("click", pourBeaker, { once: true });
+            function pourBeaker() {
+              // move water beaker to its initial position of rest
+              water.animate(
+                [
+                  {},
+                  {
+                    transform: "translate(0,0)",
+                  },
+                ],
+                { duration: 1000, fill: "forwards" }
+              );
+
+              // move the beaker closer to cylinder and pour into it
+              beaker.animate(
+                [
+                  {},
+                  // { transform: `translate(0,0)` },
+                  {
+                    transform: `translate(${
+                      cylinderCords.left - beakerCords.right
+                    }px,${cylinderCords.top - beakerCords.bottom}px)`,
+                    composite: "accumulate",
+                  },
+                  {
+                    transform: `translate(${
+                      cylinderCords.left - beakerCords.right
+                    }px,${
+                      cylinderCords.top - beakerCords.bottom
+                    }px) rotate(45deg)`,
+                    composite: "accumulate",
+                  },
+                  {
+                    transform: `translate(${
+                      cylinderCords.left - beakerCords.right
+                    }px,${
+                      cylinderCords.top - beakerCords.bottom
+                    }px) rotate(45deg)`,
+                    composite: "accumulate",
+                  },
+                  {
+                    transform: `translate(0,0)`,
+                  },
+                ],
+                {
+                  duration: 4000,
+                  fill: "forwards",
+                  // composite: "accumulate",
+                }
+              );
+
+              beaker.firstChild.animate(
+                [
+                  {},
+                  {
+                    bottom: "-100px",
+                  },
+                ],
+                {
+                  duration: 1000,
+                  fill: "forwards",
+                  delay: 1000,
+                }
+              );
+              cylinder.querySelector(".sediment").animate(
+                [
+                  {},
+                  {
+                    bottom: "-100px",
+                  },
+                ],
+                {
+                  duration: 1000,
+                  fill: "forwards",
+                  delay: 1500,
+                }
+              );
             }
-          );
+          };
+
+          // beaker.animate(
+          //   [
+          //     {},
+          //     {
+          //       transform: `translate(0,${}px)`,
+          //     },
+          //   ],
+          //   {
+          //     duration: 1000,
+          //     fill: "forwards",
+          //   }
+          // );
         }
       };
-
-      // beaker.animate(
-      //   [
-      //     {},
-      //     {
-      //       transform: `translate(0,${}px)`,
-      //     },
-      //   ],
-      //   {
-      //     duration: 1000,
-      //     fill: "forwards",
-      //   }
-      // );
     }
   };
+  // pourMortar after empty beaker comes near to mortar along with pestle moving aside and after pouring return mortar back to its initial position
 }
+
+// function startAnimation() {
+//   sediments.addEventListener("click", moveSediments);
+//   pestle.addEventListener("click", movePestle, {
+//     once: true,
+//   });
+//   water.addEventListener("click", pourWater, { once: true });
+// }
