@@ -194,6 +194,7 @@ function moveBeaker({ target: beaker }) {
   const beakerCords = beaker.getBoundingClientRect();
   const mortarCords = mortar.getBoundingClientRect();
 
+  // move beaker closer to mortar
   beaker.animate(
     [
       {},
@@ -209,7 +210,7 @@ function moveBeaker({ target: beaker }) {
     }
   ).onfinish = () => {
     let beakerLevel = -100;
-    mortar.addEventListener("click", pourMortar);
+    mortar.addEventListener("click", pourMortar, { once: true });
 
     function pourMortar() {
       beakerLevel += 20;
