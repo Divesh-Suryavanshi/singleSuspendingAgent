@@ -93,39 +93,66 @@ function movePestle() {
       fill: "forwards",
     }
   ).onfinish = () => {
-    shake();
-    function shake() {
-      const vessel = document.querySelector(".pestle");
+    pestle.addEventListener("mousedown", shakePestle);
 
-      vessel.style.animation = "none";
-      //   var liquid = document.getElementById("liquid");
-      var duration = 1000; // Duration of the shake animation in milliseconds
-      var start = null;
-
-      function step(timestamp) {
-        if (!start) start = timestamp;
-        var progress = timestamp - start;
-
-        // Calculate the horizontal position of the vessel based on the progress
-        var x = Math.sin(progress / 20) * 10;
-
-        // vessel.style.transform = "translateX(" + x + "px)";
-        vessel.style.transform =
-          "translateX(" + x + "px) rotate(" + x + "deg) !important";
-
-        if (progress < duration) {
-          // Continue the animation until the duration is reached
-          window.requestAnimationFrame(step);
-        } else {
-          // Animation completed, reset the vessel position
-          // vessel.style.transform = "translateX(0)";
-
-          vessel.style.transform = "translateX(0) rotate(0) !important";
-        }
-      }
-      // Start the animation
-      window.requestAnimationFrame(step);
+    function shakePestle() {
+      const shakes = 5;
+      const shakeDistance = 10;
+      pestle.animate(
+        [
+          {},
+          {
+            transform: `translate(${mortarCords.left - pestleCords.left}px,${
+              mortarCords.top + 20 - pestleCords.bottom
+            }px) rotate(-63deg)`,
+          },
+          {
+            transform: `translate(${mortarCords.left - pestleCords.left}px,${
+              mortarCords.top + 20 - pestleCords.bottom
+            }px) rotate(-37deg)`,
+          },
+          {},
+        ],
+        { duration: 500, iterations: 3 }
+      );
     }
+
+    pestle.animate([{}, {}], {
+      duration: 1000,
+    });
+
+    // function shake() {
+    //   const vessel = document.querySelector(".pestle");
+
+    //   vessel.style.animation = "none";
+    //   //   var liquid = document.getElementById("liquid");
+    //   var duration = 1000; // Duration of the shake animation in milliseconds
+    //   var start = null;
+
+    //   function step(timestamp) {
+    //     if (!start) start = timestamp;
+    //     var progress = timestamp - start;
+
+    //     // Calculate the horizontal position of the vessel based on the progress
+    //     var x = Math.sin(progress / 20) * 10;
+
+    //     // vessel.style.transform = "translateX(" + x + "px)";
+    //     vessel.style.transform =
+    //       "translateX(" + x + "px) rotate(" + x + "deg) !important";
+
+    //     if (progress < duration) {
+    //       // Continue the animation until the duration is reached
+    //       window.requestAnimationFrame(step);
+    //     } else {
+    //       // Animation completed, reset the vessel position
+    //       // vessel.style.transform = "translateX(0)";
+
+    //       vessel.style.transform = "translateX(0) rotate(0) !important";
+    //     }
+    //   }
+    //   // Start the animation
+    //   window.requestAnimationFrame(step);
+    // }
   };
 }
 
