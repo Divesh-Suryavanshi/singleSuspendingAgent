@@ -9,6 +9,12 @@ const btnReset = document.querySelector(".reset");
 
 const sediments = document.querySelector(`.sediment-agent`);
 
+// accordian
+function toggleAccordion(element) {
+  const content = element.nextElementSibling;
+  content.style.display = content.style.display === "block" ? "none" : "block";
+}
+
 function startAndResetAnimation() {
   sediments.style.visibility = "visible";
   sediments.addEventListener("click", moveSediments);
