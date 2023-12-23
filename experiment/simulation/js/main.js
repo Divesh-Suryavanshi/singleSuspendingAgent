@@ -15,7 +15,7 @@ function toggleAccordion(element) {
   content.style.display = content.style.display === "block" ? "none" : "block";
 }
 
-function startAndResetAnimation() {
+function startAnimation() {
   sediments.style.visibility = "visible";
   sediments.addEventListener("click", moveSediments);
   pestle.addEventListener("click", movePestle, {
@@ -25,9 +25,9 @@ function startAndResetAnimation() {
   beakers.addEventListener("click", moveBeaker, { once: true });
 }
 
-btnReset.addEventListener("click", startAndResetAnimation);
+// btnReset.addEventListener("click", startAndResetAnimation);
 
-startAndResetAnimation();
+startAnimation();
 
 // sediments.addEventListener("click", moveSediments);
 
@@ -71,6 +71,9 @@ function moveSediments({ target: sedimentAgent }) {
 // });
 
 function movePestle() {
+  const mortar = document.querySelector(".mortar");
+  const pestle = document.querySelector(".pestle");
+
   const pestleCords = pestle.getBoundingClientRect();
   const mortarCords = mortar.getBoundingClientRect();
   //   const row1 = document.querySelector(`.sediment-agent > row1:nth-child(${count})`);
@@ -123,9 +126,9 @@ function movePestle() {
       );
     }
 
-    pestle.animate([{}, {}], {
-      duration: 1000,
-    });
+    // pestle.animate([{}, {}], {
+    //   duration: 1000,
+    // });
 
     // function shake() {
     //   const vessel = document.querySelector(".pestle");
@@ -224,6 +227,9 @@ function pourWater() {
 // beakers.addEventListener("click", moveBeaker, { once: true });
 
 function moveBeaker({ target: beaker }) {
+  const mortar = document.querySelector(".mortar");
+  const pestle = document.querySelector(".pestle");
+
   const beakerCords = beaker.getBoundingClientRect();
   const mortarCords = mortar.getBoundingClientRect();
 
@@ -250,7 +256,9 @@ function moveBeaker({ target: beaker }) {
       const mortarCords = mortar.getBoundingClientRect();
       const beakerCords = beaker.getBoundingClientRect();
 
-      sediments.style.visibility = "hidden";
+      // console.log(sedimentsUsed);
+      sedimentsUsed.forEach((element) => (element.style.visibility = "hidden"));
+      // sedimentsUsed[sedimentsUsed.length - 1].style.visibility = "hidden";
 
       pestle.animate(
         [
@@ -264,6 +272,12 @@ function moveBeaker({ target: beaker }) {
           fill: "forwards",
         }
       ).onfinish = () => {
+        // pestle.parentNode.replaceChild(newElement, pestle);
+
+        // pestle.addEventListener;
+
+        // console.log("error here", pestle.parentNode);
+        // pestle.removeEventListener()
         const sediment = beaker.querySelector(".sediment");
         // sediment.style.animation = "fillBeaker 2s forwards";
         sediment.animate(
@@ -396,7 +410,23 @@ function moveBeaker({ target: beaker }) {
                   fill: "forwards",
                   // composite: "accumulate",
                 }
-              );
+              ).onfinish = () => {
+                beaker.style.visibility = "hidden";
+                beakers.addEventListener("click", moveBeaker, { once: true });
+
+                var oldPestle = document.querySelector(".pestle");
+                var newPestle = oldPestle.cloneNode();
+
+                oldPestle.replaceWith(newPestle);
+
+                newPestle.addEventListener("click", movePestle, { once: true });
+
+                // const newPestle = document.querySelector(".pestle");
+                // console.log(newPestle);
+                // newPestle.addEventListener("click", movePestle, {
+                //   once: true,
+                // });
+              };
 
               beaker.firstChild.animate(
                 [
