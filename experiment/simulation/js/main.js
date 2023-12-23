@@ -4,8 +4,8 @@ const water = document.querySelector(".water");
 const beakers = document.querySelector(".beakers");
 const cylinders = document.querySelector(".measuring-cylinder");
 
-const btnShake = document.querySelector(".shake");
-const btnReset = document.querySelector(".reset");
+// const btnShake = document.querySelector(".shake");
+// const btnReset = document.querySelector(".reset");
 
 const sediments = document.querySelector(`.sediment-agent`);
 
